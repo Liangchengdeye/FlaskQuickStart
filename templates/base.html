@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    {% if title %}
+        <title>{{ title }} - 博客</title>
+    {% else %}
+        <title>欢迎来到博客!</title>
+    {% endif %}
+</head>
+<body>
+
+<div>博客 :
+    <a href="{{ url_for('index') }}">首页</a>
+    {% if current_user.is_anonymous %}
+        <a href="{{ url_for('login') }}">登录</a>
+    {% else %}
+        <a href="{{ url_for('user', username=current_user.username) }}">用户中心</a>
+        <a href="{{ url_for('logout') }}">退出</a>
+    {% endif %}
+</div>
+<hr>
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <ur>
+            {% for message in messages %}
+                <li>{{ message }}</li>>
+            {% endfor %}
+        </ur>
+    {% endif %}
+{% endwith %}
+
+{% block content %}  {% endblock %}
+</body>
+</html>
